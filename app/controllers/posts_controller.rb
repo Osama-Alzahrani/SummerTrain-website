@@ -27,6 +27,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @post.approved = false
     @post.user = current_user
 
     respond_to do |format|
@@ -77,10 +78,18 @@ class PostsController < ApplicationController
     redirect_back(fallback_location: request.referer)
   end
 
+
+
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+      redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user
+    end
+
+    rescue_from ActiveRecord::RecordNotFound do # Redirect to root_url if record not found !!
+      redirect_to root_url
     end
 
     # Only allow a list of trusted parameters through.
