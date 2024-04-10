@@ -11,4 +11,7 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= :user
   end
+
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 end

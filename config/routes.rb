@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       # remove_image_post_path(image)
       delete :remove_image
     end
+    resources :comments
   end
   #devise_for :users
 
