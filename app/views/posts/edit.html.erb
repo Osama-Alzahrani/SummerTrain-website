@@ -1,10 +1,10 @@
 <h1>Editing post</h1>
-
 <%= render "form", post: @post %>
-
 <br>
-
 <div>
   <%= link_to "Show this post", @post %> |
-  <%= link_to "Back to posts", posts_path %>
+  <%= link_to "Back to posts", posts_path %>|
+  <%if current_user.admin?%>
+    <%= link_to "Back to Admin panel",admin_path %>
+  <%end%>
 </div>

@@ -1,4 +1,7 @@
 <h1>Pages#home</h1>
+<%if current_user%>
+  <p>Your are a : <%= current_user.role%></p>
+<%end%>
 <p>Find me in app/views/pages/home.html.erb</p>
 <%=link_to "Sign up",new_user_registration_path%>
 <%=link_to "Sign in",new_user_session_path%>

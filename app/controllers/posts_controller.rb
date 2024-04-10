@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   end
 
   def is_author?
-      redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user
+      redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user or current_user.admin?
   end
 
   # GET /posts/1 or /posts/1.json
@@ -43,12 +43,16 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    if current_user == @post.user
-
+    if current_user == @post.user or current_user.admin?
 
       respond_to do |format|
         if @post.update(post_params)
-          format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+          if current_user.admin?
+            format.html { redirect_to request.referrer, notice: "Post was successfully updated."}
+          else
+            format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+          end
+
           format.json { render :show, status: :ok, location: @post }
         else
           format.html { render :edit, status: :unprocessable_entity }
@@ -85,7 +89,7 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
-      redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user
+      redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user or current_user.admin?
     end
 
     rescue_from ActiveRecord::RecordNotFound do # Redirect to root_url if record not found !!
@@ -94,6 +98,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content,images: [])
+      params.require(:post).permit(:title, :content,:approved,images: [])
     end
 end

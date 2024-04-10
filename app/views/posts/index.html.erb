@@ -4,9 +4,11 @@
   <% @posts.each do |post| %>
     <% if post.approved != false %>
       <%= render post %>
-      <p>
-        <%= link_to "Show this post", post %>
-      </p>
+      <% if post.user == current_user %>
+        <p>
+          <%= link_to "Show this post", post %>
+        </p>
+      <%end%>
     <% end %>
   <% end %>
 </div>

@@ -29,6 +29,14 @@
     <%= form.label :content, style: "display: block" %>
     <%= form.text_area :content %>
   </div>
+  <% if current_user.admin? %>
+    <p><b>Admin Side:</b></p>
+    <hr>
+    <div>
+      <%= form.label :approved, style: "display: block" %>
+      <%= form.check_box :approved, {}, "true", "false" %>
+    </div>
+  <%end%>
   <div>
     <%= form.submit %>
   </div>
