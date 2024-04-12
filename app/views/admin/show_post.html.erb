@@ -1,5 +1,31 @@
-<h1>Admin#show_post</h1>
-<p>Find me in app/views/admin/show_post.html.erb</p>
-<%= link_to "Edit this post", edit_post_path(@post) %> |
-<%= link_to "Back to posts", posts_path %>
-<%= button_to "Destroy this post", @post, method: :delete %>
+<div class="container">
+  <h1 class="text-center">Administrator</h1>
+  <%= render "admin/nav_links" %>
+  <div class="text-center mt-5">
+    <div class="btn-group">
+      <%= link_to "Edit", edit_post_path(@post), class:"btn btn-warning" %>
+      <%= button_to "Delete", @post, method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-danger" %>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <p>
+      <strong>Title:</strong> <%= @post.title %>
+    </p>
+  </div>
+  <div class="row mt-1">
+    <p><strong>Author:</strong>
+      <%= "#{@post.user.email} | #{@post.user.username}}" %>
+    </p>
+  </div>
+  <div class="row mt-1">
+    <strong>Body:</strong> <%= @post.content %>
+  </div>
+  <div class="row mt-1">
+    <strong><%= pluralize(@post.comments.count, "Comment") %>:</strong>
+    <% @post.comments.each do |comment| %>
+      <%= render 'comments/comment',
+    post: @post,
+    comment: comment %>
+    <% end %>
+  </div>
+</div>

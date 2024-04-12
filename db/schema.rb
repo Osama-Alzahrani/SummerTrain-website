@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_10_010031) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_11_182228) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,6 +45,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_10_010031) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "inst"
+    t.string "duration"
+    t.boolean "job_offered"
+    t.string "salary"
+    t.text "recommend"
+    t.text "note"
+    t.boolean "approved", default: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end

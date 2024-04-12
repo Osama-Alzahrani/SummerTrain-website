@@ -1,10 +1,14 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[ show]
+  before_action :authenticate_user!, except: %i[ show index apply]
   before_action :is_author?, only: [:edit, :update, :destroy]
   # GET /posts or /posts.json
   def index
     @posts = Post.all
+  end
+
+  def apply
+
   end
 
   def is_author?
@@ -90,7 +94,7 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
-      redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user or current_user.admin?
+      # redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user or current_user.admin?
     end
 
     rescue_from ActiveRecord::RecordNotFound do # Redirect to root_url if record not found !!

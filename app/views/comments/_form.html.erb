@@ -1,6 +1,62 @@
-<%= form_with(model: [post, post.comments.build]) do |form|%>
+<%= form_with(model: [post, comment]) do |form|%>
   <div class="form-control">
-    <%= form.text_area :content%>
-    <%= form.submit "Replay", class: "btn btn-primary mt-1" %>
+    <div class="mb-3 row align-items-center">
+      <label for="exampleFormControlInput1" class="form-label"><%=t(:test,name:"Osama")%></label>
+      <div class="col-2">
+        <%= form.text_field :inst, class: "form-control"%>
+      </div>
+    </div>
+    <div class="mb-3">
+      <%= form.text_field :duration%>
+    </div>
+    <div class="mb-3">
+      <%= form.check_box :job_offered, {}, "true", "false" %>
+    </div>
+    <div class="mb-3">
+      <%= form.number_field :salary%>
+    </div>
+    <div class="mb-3">
+      <%= form.text_field :recommend%>
+    </div>
+    <div class="mb-3">
+      <%= form.text_area :note%>
+    </div>
+    <div class="mb-3">
+      <%= form.text_area :content%>
+    </div>
+    <div>
+      <%= form.label :images, "Upload Images" %> <br />
+      <% if comment.images.attached? %>
+        <% comment.images.each do |image| %>
+          <% if image.representable? %>
+            <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
+            <%= image_tag(image, height: 100) %>
+            <%= link_to "Remove", remove_image_post_path(image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'  } %>
+          <%else%>
+            <%= pdf_preview image %>
+            <%= link_to "Remove", remove_image_post_path(image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'  } %>
+          <%end%>
+          <br />
+        <% end %>
+      <% end %>
+      <div id="file-preview-<%= comment.id%>"></div>
+      <%= form.file_field :images, multiple: true, accept: 'application/pdf,image/png,image/jpeg', onchange: "handleFileSelection(this, '#{comment.id}')" %>
+    </div>
+    <% if comment.user.admin?%>
+      <hr>
+      <div class="mb-3">
+        <%= form.check_box :approved, {}, "true", "false" %>
+      </div>
+      <!-- Other form fields -->
+      <div class="mb-3 row align-items-center">
+        <%= form.label :post_id, "Select Post", class: "col-form-label col-2" %>
+        <div class="col-6">
+          <%= form.select :post_id, options_from_collection_for_select(Post.all, 'id', 'title', post.id), {}, class: 'form-control' %>
+        </div>
+      </div>
+      <p>Selected Post ID: <%= comment.post_id %></p>
+      <!-- Other form fields -->
+    <%end%>
+    <%= form.submit submit_label, class: "btn btn-primary mt-1" %>
   </div>
 <%end%>

@@ -27,6 +27,6 @@
 #       "yes": yup
 #       enabled: "ON"
 
-en:
-  hello: "Hello world"
-  test: "MY name %{name}"
+ar:
+  hello: "مرحبا"
+  test: "%{name} اسمي هو "

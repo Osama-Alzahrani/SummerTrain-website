@@ -67,3 +67,7 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+
+gem "bundle", "~> 0.0.1"
+
+gem "jquery-rails", "~> 4.6"
