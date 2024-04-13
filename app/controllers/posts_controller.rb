@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: %i[ show index apply]
+  before_action :authenticate_user!, except: %i[ show index]
   before_action :is_author?, only: [:edit, :update, :destroy]
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.includes(:user, :images_attachments).all
   end
 
   def apply
@@ -17,7 +17,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @comments = @post.comments.order(created_at: :desc)
+    @comments = @post.comments.includes(:user, :images_attachments).order(created_at: :desc)
   end
 
   # GET /posts/new

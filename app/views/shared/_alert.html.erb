@@ -1,5 +1,9 @@
-<% if notice %>
-  <p class="notice"><%= notice %></p>
-<% elsif alert %>
-  <p class="alert"><%= alert %></p>
+<% if current_url?('/users/sign_in') %>
+  <!-- Content specific to the '/users/show' URL -->
+<% else %>
+  <% if notice %>
+    <p class="notice"><%= notice %></p>
+  <% elsif alert %>
+    <p class="alert"><%= alert %></p>
+  <% end %>
 <% end %>

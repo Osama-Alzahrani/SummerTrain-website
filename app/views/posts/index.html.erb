@@ -1,15 +1,10 @@
-<p style="color: green"><%= notice %></p>
-<h1>Posts</h1>
-<div id="posts">
-  <% @posts.each do |post| %>
-    <% if post.approved != false %>
-      <%= render post %>
-      <p>
-        <%= link_to "Show this post", post %>
-      </p>
+<div id="posts" class="text-center">
+  <%= link_to "Add",posts_apply_path,class: "mt-4 justify-content-center btn btn-primary ms-auto" %>
+  <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+    <% @posts.each do |post| %>
+      <% if post.approved != false %>
+        <%= render post %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
-<%if current_user %>
-  <!-- <%= link_to "New post", new_post_path %> -->
-<%end%>

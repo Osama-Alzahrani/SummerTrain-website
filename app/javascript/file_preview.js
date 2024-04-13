@@ -60,7 +60,7 @@ function previewFiles(input, id) {
           // If image file, create img element
           const img = document.createElement('img');
           img.src = e.target.result;
-          img.width = 200; // Set desired width for image previews
+          img.width = 300; // Set desired width for image previews
           img.height = 200; // Set desired height for image previews
           filePreview.appendChild(img);
         }

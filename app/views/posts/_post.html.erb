@@ -1,4 +1,4 @@
-<div id="<%= dom_id post %>">
+<!-- <div id="<%= dom_id post %>">
   <p>
     <strong>Title:</strong>
     <%= post.title %>
@@ -17,4 +17,24 @@
   <strong>Content:</strong>
   <%= post.content %>
 </p>
+</div> -->
+<div class="col">
+  <% if current_url?('/') %>
+    <!-- Content specific to the '/users/show' URL -->
+    <div class="card postcards" style="width: 18rem; cursor: pointer;" onclick="cardClick('<%= post_path(post) %>')" >
+    <% else %>
+      <div class="card postcards" style="width: 18rem; ">
+      <%end%>
+      <% if post.images.attached? %>
+        <% post.images.each do |image| %>
+          <div >
+            <%= image_tag image, :style => "height:9rem; width: 18rem; max-width:18rem;"%>
+          </br>
+        </div>
+      <%end%>
+    <%end%>
+    <div class="card-body">
+      <p class="card-text"><%= post.content %></p>
+    </div>
+  </div>
 </div>

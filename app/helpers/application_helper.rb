@@ -7,4 +7,7 @@ module ApplicationHelper
       tag.embed src: rails_blob_path(pdf_blob, disposition: 'inline'), type: 'application/pdf'
     end
   end
+  def current_url?(path)
+    request.fullpath == path
+  end
 end

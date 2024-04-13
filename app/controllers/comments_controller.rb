@@ -2,9 +2,13 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post
 
+  def new
+    @post = Post.find(0) # Replace 0 with the actual ID
+    @comment = @post.comments.create
+  end
 
   def create
-    @comment = @post.comments.create(comment_params)
+    @comment = @post.comments.build(comment_params)
     @comment.user = current_user
     if @comment.images.length > 2 # 2 images only
       redirect_to request.referrer, alert: "Bad images!"
@@ -14,8 +18,10 @@ class CommentsController < ApplicationController
         flash[:notice] = "Your comment has been posted!"
         redirect_to post_path(@post)
       else
-        flash[:notice] = "Your comment has not created!"
-        redirect_to post_path(@post)
+        # flash[:alert] = "Your comment has not created!"
+        # redirect_to posts_apply_path, notice: "Your comment has not created!"
+
+        render :new, status: :unprocessable_entity
       end
     end
   end
