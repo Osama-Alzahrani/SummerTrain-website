@@ -1,5 +1,5 @@
 <div class="comment-<%= comment.id %> container"
-    style="border: 1px solid black; padding: 1em; margin: 1em;">
+    style="border: 2px solid black; padding: 1em; margin: 1em;">
   <%= comment.user.username %><br />
   <% if current_user && current_user.admin? %>
     <div class="btn-group float-end">
@@ -25,6 +25,6 @@
   <div id="comment-body-<%= comment.id %>">
     <%= comment.inst %>
     <%= comment.duration %>
-    <%= comment.content %>
+    <div><%= (comment.content).html_safe %></div>
   </div>
 </div>

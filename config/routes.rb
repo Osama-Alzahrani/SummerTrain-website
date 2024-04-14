@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get 'posts/apply',to: "posts#apply"
 
+  get 'posts', to: redirect('/')
+
   resources :posts do
     member do
       # remove_image_post_path(image)
