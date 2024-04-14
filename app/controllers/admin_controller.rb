@@ -12,6 +12,6 @@ class AdminController < ApplicationController
   end
 
   def show_post
-    @post = Post.includes(:user, comments: [:user, :images_attachments]).find(params[:id])
+    @post = Post.includes(:user, comments: [:user, :images_attachments,:rich_text_content]).find(params[:id])
   end
 end

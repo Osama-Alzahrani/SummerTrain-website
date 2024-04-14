@@ -4,7 +4,9 @@ class PostsController < ApplicationController
   before_action :is_author?, only: [:edit, :update, :destroy]
   # GET /posts or /posts.json
   def index
-    @posts = Post.includes(:user, :images_attachments).all
+    @posts = Post.includes(:user, :images_attachments, :rich_text_content).all
+
+    @pagy,  @posts = pagy(@posts)
   end
 
   def apply
@@ -17,7 +19,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @comments = @post.comments.includes(:user, :images_attachments).order(created_at: :desc)
+    @comments = @post.comments.includes(:user, :images_attachments, :rich_text_content).order(created_at: :desc)
+    @pagy,  @comments = pagy(@comments)
   end
 
   # GET /posts/new

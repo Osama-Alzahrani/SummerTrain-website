@@ -60,3 +60,5 @@ pin "path" # @2.0.1
 pin "process" # @2.0.1
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
+pin "trix"
+pin "@rails/actiontext", to: "actiontext.esm.js"

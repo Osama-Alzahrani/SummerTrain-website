@@ -1,4 +1,7 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
+
   def pdf_preview(pdf_attachment)
     pdf_blob = pdf_attachment.blob
     return unless pdf_blob

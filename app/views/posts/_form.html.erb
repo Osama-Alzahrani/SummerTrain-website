@@ -27,7 +27,7 @@
   </div>
   <div>
     <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content %>
+    <%= form.rich_text_area :content %>
   </div>
   <% if current_user.admin? %>
     <p><b>Admin Side:</b></p>
