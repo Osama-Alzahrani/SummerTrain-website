@@ -22,6 +22,6 @@
 #   Post.create title: "post#{n}", content: "content#{n}", approved: true, user_id: User.first.id
 # end
 
-# 100.times do |n|
-#   Comment.create content: "post#{n}", post_id: Post.first.id, approved: true, user_id: User.first.id
-# end
+100.times do |n|
+  Comment.create content: "post#{n}", post_id: Post.first.id, approved: true, user_id: User.first.id
+end

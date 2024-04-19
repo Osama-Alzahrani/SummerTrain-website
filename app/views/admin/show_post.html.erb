@@ -22,10 +22,13 @@
   </div>
   <div class="row mt-1">
     <strong><%= pluralize(@post.comments.count, "Comment") %>:</strong>
-    <% @post.comments.each do |comment| %>
+    <% @comments.each do |comment| %>
       <%= render 'comments/comment',
     post: @post,
     comment: comment %>
     <% end %>
   </div>
+</div>
+<div class="my-5 d-flex justify-content-center">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1%>
 </div>

@@ -11,6 +11,6 @@ module ApplicationHelper
     end
   end
   def current_url?(path)
-    request.fullpath == path
+    request.fullpath.include? path
   end
 end

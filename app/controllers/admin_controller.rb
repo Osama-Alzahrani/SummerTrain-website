@@ -3,6 +3,7 @@ class AdminController < ApplicationController
 
   def posts
     @posts = Post.all.includes(:user)
+    @pagy,  @posts = pagy(@posts)
   end
 
   def comments
@@ -13,5 +14,7 @@ class AdminController < ApplicationController
 
   def show_post
     @post = Post.includes(:user, comments: [:user, :images_attachments,:rich_text_content]).find(params[:id])
+    @comments = @post.comments
+    @pagy,  @comments = pagy(@comments)
   end
 end

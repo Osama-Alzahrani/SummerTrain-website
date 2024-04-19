@@ -1,0 +1,8 @@
+<h1 class="text-center"><%= pluralize(@posts.count, "Result")%></h1>
+<%= render "search/form"%>
+<%= sort_link(@query, :title, "Title", default_order: :asc) %>
+<% @posts.each do |post| %>
+  <% if post.approved != false %>
+    <%= render post %>
+  <% end %>
+<% end %>

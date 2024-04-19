@@ -1,8 +1,15 @@
-<div class="comment-<%= comment.id %> container"
-    style="border: 2px solid black; padding: 1em; margin: 1em;">
-  <%= comment.user.username %><br />
+<style>
+  @media (max-width: 400.98px) {
+      .myComment, .btn{font-size: 10px;}
+  }
+
+  @media (max-width: 575.98px) {
+      .myComment, .btn{font-size: 12px;}
+  }
+</style>
+<div class="comment-<%= comment.id %> p-5 mt-4 rounded border border-black myComment">
   <% if current_user && current_user.admin? %>
-    <div class="btn-group float-end">
+    <div class="btn-group float-end" role="group">
       <%= link_to "Edit", nil, remote: true, class:"btn btn-warning",
       data: {
         controller: "comments",
@@ -12,7 +19,7 @@
         comments_edit_param: "edit-button-#{comment.id}"
       },
       id: "edit-button-#{comment.id}" %>
-      <%= button_to "Delete", [post, comment], class:"btn btn-danger", method: :delete %>
+      <%= link_to "Delete", [post, comment], class:"btn btn-danger", method: :delete %>
     </div>
     <div id="edit-form-<%= comment.id%>" class="d-none">
       <%= render 'comments/form',
@@ -21,10 +28,68 @@
        submit_label: "Update" %>
     </div>
   <% end %>
-  <hr />
-  <div id="comment-body-<%= comment.id %>">
-    <%= comment.inst %>
-    <%= comment.duration %>
-    <div><%= comment.content %></div>
+  <div id="comment-body-<%= comment.id %>" class="row">
+    <div class="col-12 col-sm-4 mb-2">
+      <span>Training institution:</span>
+      <div class="border p-1 rounded">
+        <%= comment.inst %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4 mb-2">
+      <span>Duration:</span>
+      <div class="border p-1 rounded">
+        <%= comment.duration %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4 mb-2">
+      <span>Note:</span>
+      <div class="border p-1 rounded text-break overflow-y-auto scrollbar" style="max-height: 10.5vh">
+        <%= comment.note %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4 d-flex flex-column">
+      <div class="mb-sm-2 mb-2">
+        <span>Did they offer you a job?</span>
+        <div class="border p-1 rounded">
+          <%= comment.job_offered ? "Yes" : "No" %>
+        </div>
+      </div>
+      <div class="mb-sm-2 mb-2">
+        <span>Did they offer you a bonus/salary?</span>
+        <div class="border p-1 rounded">
+          <%if comment.salary%>
+            <%= ((comment.salary.empty?) or comment.salary.to_i == 0) ? "No" : "Yes" %>
+          <%end%>
+        </div>
+      </div>
+      <% if comment.salary and !comment.salary.empty? %>
+        <% if !(comment.salary.to_i == 0)%>
+          <div class="mb-sm-2 mb-2">
+            <span>Amount of bonus/salary:</span>
+            <div class="border p-1 rounded">
+              <%= comment.salary %>
+              <div class="float-end">
+                ريال
+              </div>
+            </div>
+          </div>
+        <%end%>
+      <%end%>
+      <div class="mb-sm-2 mb-2">
+        <span>Who do you recommend it to?</span>
+        <div class="border p-1 rounded">
+          <%= comment.recommend %>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-8 my-sm-1 my-2">
+      <span>Training summary:</span>
+      <div class="border p-1 rounded text-wrap overflow-y-auto scrollbar" style="height: 18vh">
+        <%= comment.content %>
+      </div>
+    </div>
+  </div>
+  <div class="float-end">
+    Written by: <%= comment.user.username %>
   </div>
 </div>

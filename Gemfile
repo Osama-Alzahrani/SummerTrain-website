@@ -77,3 +77,5 @@ gem 'sassc-rails', '~> 2.0'
 gem "pagy", "~> 8.1"
 
 gem "oj", "~> 3.16"
+
+gem "ransack", "~> 4.1"

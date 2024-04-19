@@ -4,8 +4,11 @@ class PostsController < ApplicationController
   before_action :is_author?, only: [:edit, :update, :destroy]
   # GET /posts or /posts.json
   def index
-    @posts = Post.includes(:user, :images_attachments, :rich_text_content).all
+    # @posts = Post.includes(:user, :images_attachments, :rich_text_content).all
 
+    @query = Post.includes(:images_attachments, :rich_text_content).ransack(params[:q])
+
+    @posts = @query.result(distinct: true)
     @pagy,  @posts = pagy(@posts)
   end
 
@@ -19,7 +22,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @comments = @post.comments.includes(:user, :images_attachments, :rich_text_content).order(created_at: :desc)
+    @comments = @post.comments.includes(:user, :rich_text_content).order(created_at: :desc)
     @pagy,  @comments = pagy(@comments)
   end
 
@@ -97,6 +100,9 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+      if @post.id == 0
+        redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user or (current_user && current_user.admin?)
+      end
       # redirect_to root_path,notice: "You are not authorized to edit this post." unless @post.user == current_user or current_user.admin?
     end
 

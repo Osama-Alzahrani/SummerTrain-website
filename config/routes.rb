@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'search', to: 'search#index'
   authenticate :user, ->(user){user.admin?} do
     get 'admin',to: "admin#index"
     get 'admin/posts'
