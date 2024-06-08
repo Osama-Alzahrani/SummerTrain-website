@@ -14,12 +14,12 @@
     <%= form.text_field :title %>
   </div>
   <div>
-    <%= form.label :images, "Upload Images" %> <br />
+    <%= form.label :images, t("comment.upload_image") %> <br />
     <% if post.images.attached? %>
       <% post.images.each do |image| %>
         <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
         <%= image_tag(image, height: 100) %>
-        <%= link_to "Remove", remove_image_post_path(image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'  } %>
+        <%= link_to t("post.comment.delete"), remove_image_post_path(locale,image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'  } %>
         <br />
       <% end %>
     <% end %>

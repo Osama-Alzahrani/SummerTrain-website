@@ -18,15 +18,15 @@ export default class extends Controller {
     form.classList.toggle("d-none");
     form.classList.toggle("mt-5");
     commentBody.classList.toggle("d-none");
-    this.toggleEditButton(editButton);
+    this.toggleEditButton(editButton,event.params["edittext"],event.params["canceltext"]);
   }
 
-  toggleEditButton(editButton) {
-    if (editButton.innerText === "Edit") {
-      editButton.innerText = "Cancel";
+  toggleEditButton(editButton,i18_edit,i18_cancel) {
+    if (editButton.innerText === i18_edit) {
+      editButton.innerText = i18_cancel;
       this.toggleEditButtonClass(editButton);
     } else {
-      editButton.innerText = "Edit";
+      editButton.innerText = i18_edit;
       this.toggleEditButtonClass(editButton);
     }
   }

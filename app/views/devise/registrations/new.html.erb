@@ -7,11 +7,11 @@
         </div>
         <div class="card shadow-lg">
           <div class="card-body p-5">
-            <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+            <h1 class="fs-4 card-title fw-bold mb-4"><%=t("auth.sign_up")%></h1>
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
               <div class="field mb-3">
-                <%= f.label :username,class: "mb-2 text-muted" %><br />
+                <%= f.label t("auth.username"),class: "mb-2 text-muted" %><br />
                 <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "form-control" %>
               </div>
               <div class="field mb-3">
@@ -21,7 +21,7 @@
               <div class="field mb-3">
                 <%= f.label :password,class: "mb-2 text-muted" %>
                 <% if @minimum_password_length %>
-                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+                  <em>(<%= @minimum_password_length %> <%=t("auth.min_password")%>)</em>
                 <% end %><br />
                 <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
               </div>
@@ -30,16 +30,16 @@
                 <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
               </div>
               <p class="form-text text-muted mb-3">
-                By registering you agree with our terms and condition.
+                <%=t("auth.agree_terms")%>
               </p>
               <div class="align-items-center d-flex">
-                <%= f.submit "Sign up",class: "btn btn-primary ms-auto" %>
+                <%= f.submit t("auth.sign_up"),class: "btn btn-primary ms-auto" %>
               </div>
             <% end %>
           </div>
           <div class="card-footer py-3 border-0">
             <div class="text-center">
-              Already have an account? <%= link_to "Log in", new_session_path(resource_name) %><br />
+              <%=t("auth.ask_account")%> <%= link_to t("auth.login"), new_session_path(resource_name) %><br />
             </div>
           </div>
         </div>

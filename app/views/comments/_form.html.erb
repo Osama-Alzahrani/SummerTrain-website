@@ -1,4 +1,4 @@
-<%= form_with(model: [post, comment]) do |form| %>
+<%= form_with(model: [post, comment],class: "mt-5") do |form| %>
   <% if comment.errors.any? %>
     <div class="alert alert-danger">
       <h2><%= pluralize(comment.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -12,28 +12,28 @@
   <div class="row">
     <div class="col-md-6">
       <div class="mb-3">
-        <%= form.label :inst, class: "form-label" %>
+        <%= form.label t("comment.Workplace"), class: "form-label" %>
         <%= form.text_field :inst, class: "form-control" %>
       </div>
       <div class="mb-3">
-        <%= form.label :duration, class: "form-label" %>
+        <%= form.label t("comment.duration"), class: "form-label" %>
         <%= form.text_field :duration, class: "form-control" %>
       </div>
       <div class="mb-4 d-flex">
         <div>
-          <%= form.label :job_offered, class: "form-check-label" %>
+          <%= form.label t("comment.job_offer"), class: "form-check-label" %>
           <%= form.check_box :job_offered, class: "form-check-input" %>
         </div>
         <div class="px-3 mb-3">
           <label class="form-check-label" for="flexCheckDefault">
-            Salary ?
+            <%= t("comment.amount_salary")%>
           </label>
           <input class="form-check-input" type="checkbox" value="" onchange="toggleSalary()">
         </div>
       </div>
       <div class="mb-3">
       </div>
-      <div class="input-group mb-3" id="salary" style="display: none;">
+      <div class="input-group mb-3" id="salary" style="display: none; direction: ltr;">
         <!-- <%= form.label :salary, class: "form-label" %> -->
         <%= form.number_field :salary, class: "form-control",id: "salaryInput" %>
         <span class="input-group-text">ريال</span>
@@ -42,11 +42,11 @@
     </div>
     <div class="col-md-6">
       <div class="mb-3">
-        <%= form.label :recommend, class: "form-label" %>
+        <%= form.label t("comment.recommended"), class: "form-label" %>
         <%= form.text_field :recommend, class: "form-control" %>
       </div>
       <div class="mb-3">
-        <%= form.label :note, class: "form-label" %>
+        <%= form.label t("comment.note"), class: "form-label" %>
         <%= form.text_area :note, class: "form-control" %>
       </div>
       <!-- <div class="mb-3">
@@ -54,16 +54,16 @@
         <%= form.text_area :content, class: "form-control", style: "min-height: 10rem" %>
       </div> -->
       <div>
-        <%= form.label :images, "Upload Images", class: "form-label" %> <br />
+        <%= form.label :images, t("comment.upload_image"), class: "form-label" %> <br />
         <% if comment.images.attached? %>
           <% comment.images.each do |image| %>
             <% if image.representable? %>
               <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
               <%= image_tag(image, height: 100) %>
-              <%= link_to "Remove", remove_image_post_path(image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+              <%= link_to t("post.comment.delete"), remove_image_post_path(locale,image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
             <% else %>
               <%= pdf_preview image %>
-              <%= link_to "Remove", remove_image_post_path(image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+              <%= link_to t("post.comment.delete"), remove_image_post_path(locale,image), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
             <% end %>
             <br />
           <% end %>
@@ -74,7 +74,7 @@
     </div>
   </div>
   <div>
-    <%= form.label :content, style: "display: block" %>
+    <%= form.label t("comment.content"), style: "display: block" %>
     <%= form.rich_text_area :content %>
   </div>
   <% if current_user && current_user.admin? %>
@@ -82,17 +82,17 @@
     <div class="row">
       <div class="col-md-6">
         <div class="mb-3">
-          <%= form.label :approved, class: "form-check-label" %>
+          <%= form.label t("approved.title"), class: "form-check-label" %>
           <%= form.check_box :approved, class: "form-check-input" %>
         </div>
         <!-- Other form fields -->
       </div>
       <div class="col-md-6">
         <div class="mb-3">
-          <%= form.label :post_id, "Select Post", class: "form-label" %>
+          <%= form.label t("approved.select_post"), class: "form-label" %>
           <%= form.select :post_id, options_from_collection_for_select(Post.all, 'id', 'title', post.id), {}, class: 'form-control' %>
         </div>
-        <p>Selected Post ID: <%= comment.post_id %></p>
+        <p><%= t("approved.selected_post_id")%> <%= comment.post_id %></p>
         <!-- Other form fields -->
       </div>
     </div>

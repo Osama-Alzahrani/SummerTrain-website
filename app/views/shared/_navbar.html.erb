@@ -1,26 +1,45 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm" style="direction: ltr!important">
   <div class="container-fluid">
-    <%= link_to "Navbar", root_path, class: "navbar-brand"%>
     <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <i class="bi bi-globe2 fs-5"></i>
+          <% if locale == :ar%>
+            <%= link_to t('language'), url_for(locale: :en) , class: "navbar-brand"%>
+          <%else %>
+            <%= link_to t('language'), url_for(locale: :ar), class: "navbar-brand"%>
+          <%end%>
+        </li>
+      </ul>
+      <ul class="navbar-nav  ms-auto">
         <% if current_user %>
+          <% if current_user.admin?%>
+            <li class="nav-item">
+              <%= link_to t("post.admin_panel"), admin_path, class: "btn btn-outline-info"%>
+            </li>
+          <%end%>
           <li class="nav-item">
-            <%= link_to current_user.email,  edit_user_registration_path, class: "nav-link"%>
+            <%= link_to t('my_account'),  edit_user_registration_path, class: "nav-link"%>
           </li>
           <li class="nav-item">
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger"%>
+            <%= link_to t("logout"), destroy_user_session_path, method: :delete, class: "btn btn-outline-danger"%>
           </li>
         <%else%>
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link"%>
+            <%= link_to t("sign_in"), new_user_session_path, class: "nav-link"%>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign up", new_user_registration_path, class: "nav-link"%>
+            <%= link_to t("sign_up"), new_user_registration_path, class: "nav-link"%>
           </li>
         <%end%>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <%= link_to "Navbar", root_path, class: "navbar-brand"%>
+        </li>
       </ul>
     </div>
   </div>

@@ -1,4 +1,4 @@
 <%= render 'comments/form',
     post: Post.find(0),
     comment: Post.find(0).comments.build,
-    submit_label: "Send" %>
+    submit_label: t("comment.send") %>

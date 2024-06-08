@@ -1,13 +1,13 @@
 <div class="col">
-  <% if current_url?('/posts/') %>
+  <% if current_url?('ar/posts/') %>
     <div class="card postcards ml-5">
     <% else %>
-      <div class="card postcards ml-5" style="cursor: pointer;" onclick="cardClick('<%= post_path(post) %>')" >
+      <div class="card postcards ml-5" style="cursor: pointer;" onclick="cardClick('<%= post_path(locale,post) %>')" >
       <%end%>
       <% if post.images.attached? %>
         <% post.images.each do |image| %>
           <div >
-            <%= image_tag image, :style => "height:17vh; width: 100%"%>
+            <%=image_tag image, loading:"lazy", :style => "height:17vh; width: 100%"%>
           </br>
         </div>
       <%end%>

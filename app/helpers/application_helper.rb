@@ -13,4 +13,8 @@ module ApplicationHelper
   def current_url?(path)
     request.fullpath.include? path
   end
+
+  def root_path?
+    request.path == root_path
+  end
 end

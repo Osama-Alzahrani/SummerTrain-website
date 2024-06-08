@@ -28,10 +28,10 @@
 <div>
   <% if current_user && current_user.admin?%>
     <div class="mt-3">
-      <%= link_to "Admin Panel", admin_post_path(@post),class: "btn btn-success" %> |
-      <%= link_to "Edit this post", edit_post_path(@post),class: "btn btn-warning"  %> |
-      <%= link_to "Back to posts", posts_path,class:"btn btn-primary" %>
-      <%= button_to "Destroy this post", @post, method: :delete,class: "btn btn-danger mt-3"%>
+      <%= link_to t('post.admin_panel'), admin_post_path(locale,@post),class: "btn btn-success" %> |
+      <%= link_to t("post.edit_post"), edit_post_path(locale,@post),class: "btn btn-warning"  %> |
+      <%= link_to t("post.back_to_post"), root_path,class:"btn btn-primary" %>
+      <%= button_to t("post.delete_post"), @post, method: :delete,class: "btn btn-danger mt-3"%>
     </div>
   <%end%>
 </div>

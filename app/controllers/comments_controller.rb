@@ -11,11 +11,11 @@ class CommentsController < ApplicationController
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user
     if @comment.images.length > 2 # 2 images only
-      redirect_to request.referrer, alert: "Bad images!"
+      redirect_to request.referrer, alert: t("comment.messages.errors.too_many_images")
     else
 
       if @comment.save
-        flash[:notice] = "Your comment has been posted!"
+        flash[:notice] = t("comment.messages.notification.complete_message")
         redirect_to post_path(@post)
       else
         # flash[:alert] = "Your comment has not created!"
@@ -37,18 +37,18 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if (params["comment"]["images"].length-1) > 2 # 2 files only
-        format.html { redirect_to request.referrer, alert: "you can only upload 2 Files!" }
+        format.html { redirect_to request.referrer, alert: t("comment.messages.errors.too_many_images") }
       else
 
       if @comment.update(comment_params)
         if(current_user.admin?)
-          format.html { redirect_to request.referrer, notice: 'Comment has been updated' }
+          format.html { redirect_to request.referrer, notice: t("comment.messages.notification.update") }
         else
-          format.html { redirect_to post_url(@post), notice: 'Comment has been updated' }
+          format.html { redirect_to post_url(@post), notice: t("comment.messages.notification.update") }
         end
 
       else
-        format.html { redirect_to post_url(@post), alert: 'Comment was not updated!' }
+        format.html { redirect_to post_url(@post), alert: t("comment.messages.errors.update") }
       end
     end
     end

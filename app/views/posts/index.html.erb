@@ -1,25 +1,34 @@
-<div class="mt-4">
-  <%= search_form_for(@query, url: root_path, method: :get, class:"d-flex")  do |f| %>
-    <%= f.search_field :title_or_content_i_cont_any,
-   placeholder: "Search...",class:"form-control me-2" %>
-    <%= f.submit "Search",class:"btn btn-outline-success" %>
-  <% end %>
-</div>
-<div class="my-5 d-flex justify-content-center">
-  <div class="d-grid gap-4 col mx-auto" style="justify-items: center;">
-    <span class="fw-bold fs-3" >Share your experience !</span>
-    <%= link_to "Add",posts_apply_path,class: "btn btn-primary col-2" %>
+<div class="contain">
+  <%= image_tag("banner.jpg", :alt => "rss feed",class: "img-fluid") %>
+  <div class="position-absolute top-0 start-50 translate-middle-x px-5">
+    <%= render "shared/alert"%>
   </div>
-</div>
-<div id="posts">
-  <div class="row row-cols-2 row-cols-md-4 g-4 mt-4">
-    <% @posts.each do |post| %>
-      <% if post.approved != false %>
-        <%= render post %>
+  <% if locale == :ar%>
+    <p class="position-absolute top-50 translate-middle-y px-5 text-white" style="margin-top:-2.5vw; font-size:2.5vw;">
+    <%else%>
+      <p class="position-absolute top-50 start-0 translate-middle-y px-5 text-white" style="margin-top:-2.5vw; font-size:2.5vw;">
+      <%end%>
+      <%=t('main_page.banner1_html')%>
+      <%= link_to t('main_page.share_exp'),posts_apply_path,class: "btn btn-primary col-auto p-2",style:"font-size:1.3vw;" %>
+    </p>
+  </div>
+  <div class="contain">
+    <%= image_tag("SecondBanner.png", :alt => "rss feed",class: "img-fluid", style:"margin-top:-10vw;") %>
+    <p class="position-absolute top-50 start-0 translate-middle-y text-white" style="padding: 15vw; margin-top:-3vw; font-size:1.5vw;">
+      <%=t('main_page.banner2_html')%>
+    </p>
+  </div>
+  <div class="container">
+    <div style="margin-top:5vw;" class="justify-content-center d-flex">
+      <%= search_form_for(@query, url: root_path, method: :get,class: "col-6", remote: true)  do |f| %>
+        <%= f.search_field :title_or_content_i_cont_any,
+    placeholder: t("search"),class:"form-control me-2" %>
       <% end %>
-    <% end %>
+    </div>
+    <div id="posts">
+      <%= render "posts/posts_list"%>
+    </div>
+    <div id="pagination" class="my-5 d-flex justify-content-center" style="direction: ltr;">
+      <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+    </div>
   </div>
-</div>
-<div class="my-5 d-flex justify-content-center">
-  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1%>
-</div>

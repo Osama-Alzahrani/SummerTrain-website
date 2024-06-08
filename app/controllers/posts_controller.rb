@@ -6,10 +6,16 @@ class PostsController < ApplicationController
   def index
     # @posts = Post.includes(:user, :images_attachments, :rich_text_content).all
 
-    @query = Post.includes(:images_attachments, :rich_text_content).ransack(params[:q])
+    @query = Post.includes(:images_attachments, :rich_text_content).where(:approved=>true).ransack(params[:q])
 
     @posts = @query.result(distinct: true)
-    @pagy,  @posts = pagy(@posts)
+    @pagy, @posts = pagy(@posts)
+
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def apply

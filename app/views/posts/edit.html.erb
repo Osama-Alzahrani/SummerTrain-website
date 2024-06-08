@@ -2,9 +2,9 @@
 <%= render "form", post: @post %>
 <br>
 <div>
-  <%= link_to "Show this post", @post %> |
-  <%= link_to "Back to posts", posts_path %>|
+  <%= link_to t("post.show_this_post"), @post %> |
+  <%= link_to t("post.back_to_post"), root_path %>|
   <%if current_user.admin?%>
-    <%= link_to "Back to Admin panel",admin_path %>
+    <%= link_to t("post.admin_panel"),admin_path %>
   <%end%>
 </div>

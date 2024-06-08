@@ -1,27 +1,27 @@
 <div class="container">
-  <h1 class="text-center">Administrator</h1>
+  <h1 class="text-center"><%=t("admin_panel")%></h1>
   <%= render "admin/nav_links" %>
   <div class="text-center mt-5">
-    <div class="btn-group">
-      <%= link_to "Edit", edit_post_path(@post), class:"btn btn-warning" %>
-      <%= button_to "Delete", @post, method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-danger" %>
+    <div class="btn-group" style="direction: ltr;">
+      <%= link_to t("post.comment.edit"), edit_post_path(locale,@post), class:"btn btn-warning" %>
+      <%= button_to t("post.comment.delete"), @post, method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-danger" %>
     </div>
   </div>
   <div class="row mt-1">
     <p>
-      <strong>Title:</strong> <%= @post.title %>
+      <strong><%=t("post.title")%></strong> <%= @post.title %>
     </p>
   </div>
   <div class="row mt-1">
-    <p><strong>Author:</strong>
+    <p><strong><%=t("post.author")%></strong>
       <%= "#{@post.user.email} | #{@post.user.username}}" %>
     </p>
   </div>
   <div class="row mt-1">
-    <strong>Body:</strong> <%= @post.content %>
+    <strong><%=t("comment.content")%></strong> <%= @post.content %>
   </div>
   <div class="row mt-1">
-    <strong><%= pluralize(@post.comments.count, "Comment") %>:</strong>
+    <strong><%= pluralize(@post.comments.count, t("post.exper")) %></strong>
     <% @comments.each do |comment| %>
       <%= render 'comments/comment',
     post: @post,
