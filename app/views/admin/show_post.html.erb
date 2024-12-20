@@ -1,5 +1,34 @@
-<h1>Admin#show_post</h1>
-<p>Find me in app/views/admin/show_post.html.erb</p>
-<%= link_to "Edit this post", edit_post_path(@post) %> |
-<%= link_to "Back to posts", posts_path %>
-<%= button_to "Destroy this post", @post, method: :delete %>
+<div class="container">
+  <h1 class="text-center"><%=t("admin_panel")%></h1>
+  <%= render "admin/nav_links" %>
+  <div class="text-center mt-5">
+    <div class="btn-group" style="direction: ltr;">
+      <%= link_to t("post.comment.edit"), edit_post_path(locale,@post), class:"btn btn-warning" %>
+      <%= button_to t("post.comment.delete"), @post, method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-danger" %>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <p>
+      <strong><%=t("post.title")%></strong> <%= @post.title %>
+    </p>
+  </div>
+  <div class="row mt-1">
+    <p><strong><%=t("post.author")%></strong>
+      <%= "#{@post.user.email} | #{@post.user.username}}" %>
+    </p>
+  </div>
+  <div class="row mt-1">
+    <strong><%=t("comment.content")%></strong> <%= @post.content %>
+  </div>
+  <div class="row mt-1">
+    <strong><%= pluralize(@post.comments.count, t("post.exper")) %></strong>
+    <% @comments.each do |comment| %>
+      <%= render 'comments/comment',
+    post: @post,
+    comment: comment %>
+    <% end %>
+  </div>
+</div>
+<div class="my-5 d-flex justify-content-center">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1%>
+</div>

@@ -1,20 +1,21 @@
-<div id="<%= dom_id post %>">
-  <p>
-    <strong>Title:</strong>
-    <%= post.title %>
-  </p>
-  <p>
-    <strong>Posted by:</strong>
-    <%= post.user.username %>
-  </p>
-  <% if post.images.attached? %>
-    <% post.images.each do |image| %>
-      <%= image_tag(image,height: 100)%>
-    </br>
-  <%end%>
-<%end%>
-<p>
-  <strong>Content:</strong>
-  <%= post.content %>
-</p>
+<div class="col">
+  <% if current_url?('ar/posts/') %>
+    <div class="card postcards ml-5">
+    <% else %>
+      <div class="card postcards ml-5" style="cursor: pointer;" onclick="cardClick('<%= post_path(locale,post) %>')" >
+      <%end%>
+      <% if post.images.attached? %>
+        <% post.images.each do |image| %>
+          <div >
+            <%=image_tag image, loading:"lazy", :style => "height:17vh; width: 100%"%>
+          </br>
+        </div>
+      <%end%>
+    <%end%>
+    <hr>
+    <div class="card-body overflow-y-auto scrollbar" style="height: 18vh; overflow: hidden;text-overflow: ellipsis; ">
+      <h5 class="card-title"><%= post.title %></h5>
+      <p class="card-text"><%= post.content %></p>
+    </div>
+  </div>
 </div>

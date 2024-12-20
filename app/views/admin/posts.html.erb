@@ -1,2 +1,29 @@
-<h1>Admin#posts</h1>
-<p>Find me in app/views/admin/posts.html.erb</p>
+<div class="container">
+  <h1 class="text-center"><%=t("admin_panel")%></h1>
+  <%= render 'admin/nav_links' %>
+  <div class="rounded">
+    <table class="admin-table rounded-corners">
+      <thead>
+        <tr>
+          <th scope="col"><%=t("admin.id")%></th>
+          <th scope="col"><%=t("admin.post")%></th>
+          <th scope="col"><%=t("admin.account_name")%></th>
+          <th scope="col"><%=t("admin.comment")%></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each do |post| %>
+          <tr>
+            <td scope="row"><%= post.id %></td>
+            <td><%= link_to post.title.truncate(15), admin_post_path(locale,post) %></td>
+            <td><%= post.user.username %></td>
+            <td><%= pluralize(post.comments.size, t("admin.experiment")) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="my-5 d-flex justify-content-center" style="direction: ltr;">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1%>
+</div>
